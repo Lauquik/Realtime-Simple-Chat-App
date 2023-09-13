@@ -1,0 +1,38 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+      - 4000:4000
+      - 8080:8080
+    depends_on:
+      - redis
+      - mongodb
+      - rabbit
+    networks:
+      - chatnet
+    hostname: myapphost
+
+  redis:
+    image: redis
+    networks:
+      - chatnet
+    hostname: redishost
+  
+  mongodb:
+    image: mongo
+    networks:
+      - chatnet
+    hostname: mongohost
+
+  rabbit:
+    image: rabbitmq
+    networks:
+      - chatnet
+    hostname: rabbithost
+
+networks:
+    chatnet:
+      name: chat-network
+
